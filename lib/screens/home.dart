@@ -18,13 +18,18 @@ class _SearchServicesState extends State<SearchServices> {
   var serviceList = [
     {
       "name" : "Water",
-      "des" : "water service will provide t",
+      "des" : "You can create, update and collect payment for water connections",
       "serviceType" : "water",
     },
     {
-      "name" : "Poperty Tax",
-      "des" : "water service will provide t",
+      "name" : "Property Tax",
+      "des" : "You can apply for a new property, update and search for it",
       "serviceType" : "propertyTax",
+    },
+    {
+      "name" : "Trade Licence",
+      "des" : "You can apply, renew and search for Trade licences",
+      "serviceType" : "tradeLicence",
     }
   ];
 

@@ -25,13 +25,49 @@ mixin ServiceHandler {
       "categoryType" : "collectPayment",
     }
   ];
+  var propertyServiceList = [
+    {
+      "name" : "Create Property",
+      "des"  : "Create a new property",
+      "categoryType" : "create",
+    },
+    {
+      "name" : "Update Property",
+      "des"  : "Update property details",
+      "categoryType" : "update",
+    },
+    {
+      "name" : "Search Property",
+      "des"  : "Search a property",
+      "categoryType" : "search",
+    }
+  ];
+  var tradeLicenceServiceList = [
+    {
+      "name" : "New Trade licence",
+      "des"  : "Apply for a new trade licence",
+      "categoryType" : "create",
+    },
+    {
+      "name" : "Renew Trade licence",
+      "des"  : "Renew a trade licence",
+      "categoryType" : "update",
+    },
+    {
+      "name" : "Search Application",
+      "des"  : "Search Trade licence application",
+      "categoryType" : "search",
+    }
+  ];
 
   List<Map> getCategoriesBasedOnService(Map service){
     switch(service['serviceType']){
       case 'water' :
         return waterServiceList;
       case 'propertyTax' :
-        return [];
+        return propertyServiceList;
+      case 'tradeLicence' :
+        return tradeLicenceServiceList;
       default :
         return [];
     }
@@ -42,7 +78,7 @@ mixin ServiceHandler {
     switch(serviceType){
       case 'water' :
         switch(category['categoryType']){
-          case 'create' :case 'update' :
+          case 'create' :case 'update' :case 'search' :
             Navigator.push(context, MaterialPageRoute(builder: (_)=> Consumer(category)));
             break;
           case 'collectPayment' :
