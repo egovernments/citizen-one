@@ -1,5 +1,16 @@
 # Edge Client
 
+## Setup an Editor
+- Refer this [link](https://docs.flutter.dev/get-started/editor) for IDE setup(Prefer VS code which is very light to use), 
+
+## Flutter Setup 
+- Refer this [link](https://docs.flutter.dev/get-started/install) for doing the flutter setup in your local machine for respective platforms 
+
+## Project Setup
+- Clone the repository [https://github.com/egovernments/citizen-one.git](https://github.com/egovernments/citizen-one.git)
+- $ flutter pub get
+- $ flutter run
+- 
 ## Commands for flutter
 - **flutter run** : Command to run the app 
 - **flutter build web** : Command to build web 
@@ -8,12 +19,6 @@
 ## JSON Serialization
 Command: 
 - **flutter pub run build_runner build --delete-conflicting-outputs** 
-
-## Project Setup
-- Clone the repository [https://github.com/egovernments/punjab-mgramseva](https://github.com/egovernments/punjab-mgramseva)
-- $ cd /punjab-mgramseva/frontend/mgramseva
-- $ flutter pub get
-- Change the url in the lib/Env/app_config.dart to the desired instance url
 
 ## About Flutter
 For help getting started with Flutter, view our
