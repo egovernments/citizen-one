@@ -1,16 +1,21 @@
-# edge_client
+# Edge Client
 
-A new Flutter project.
+## Commands for flutter
+- **flutter run** : Command to run the app 
+- **flutter build web** : Command to build web 
+- **flutter build apk --release** : Command to build the apk of the application
 
-## Getting Started
+## JSON Serialization
+Command: 
+- **flutter pub run build_runner build --delete-conflicting-outputs** 
 
-This project is a starting point for a Flutter application.
+## Project Setup
+- Clone the repository [https://github.com/egovernments/punjab-mgramseva](https://github.com/egovernments/punjab-mgramseva)
+- $ cd /punjab-mgramseva/frontend/mgramseva
+- $ flutter pub get
+- Change the url in the lib/Env/app_config.dart to the desired instance url
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
+## About Flutter
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
