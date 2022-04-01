@@ -10,3 +10,14 @@ class PaginationResponse {
   bool isPageChange;
   PaginationResponse(this.limit, this.offset, [this.isPageChange = false]);
 }
+
+enum RequestType { GET, PUT, POST, DELETE }
+
+enum ExceptionType {
+  UNAUTHORIZED,
+  BADREQUEST,
+  INVALIDINPUT,
+  FETCHDATA,
+  OTHER,
+  CONNECTIONISSUE
+}

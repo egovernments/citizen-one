@@ -21,21 +21,13 @@ class BaseService {
     var uri;
 
     if (queryParameters == null) {
-      uri = Uri.parse('${baseUrl != null ? baseUrl : baseUrl}$url');
+      uri = Uri.parse('$baseUrl$url');
     } else {
       String queryString = Uri(queryParameters: queryParameters).query;
       uri = Uri.parse(
           '${baseUrl != null ? baseUrl : baseUrl}$url?$queryString');
       // uri = Uri.https(apiBaseUrl, url!,  queryParameters);
     }
-
-    // dio.options.baseUrl = baseUrl ?? Urls.baseUrl;
-    // dio.options.connectTimeout = Constants.CONNECTION_TIMEOUT; //5s
-    // dio.options.receiveTimeout = Constants.RECEIVE_TIMEOUT; //5s
-    // dio.options.contentType =  'application/json';
-    // dio.options.headers =  {
-    //   "Connection" : 'Keep-Alive'
-    // };
 
     if (requestInfo != null) {
       if (body != null) {
@@ -72,9 +64,8 @@ class BaseService {
       }
       return _response(response);
     } on CustomException catch (e) {
-      throw e;
+      rethrow;
     } catch (e) {
-      print(e);
       throw CustomException('', 502, ExceptionType.CONNECTIONISSUE);
     }
   }
