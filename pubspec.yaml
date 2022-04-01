@@ -29,7 +29,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.4
   egov_widgets:
     path: ./egov_widgets
   freezed_annotation: ^1.1.0

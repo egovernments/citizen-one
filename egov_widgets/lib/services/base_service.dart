@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
-import 'package:edge_client/service/request_info.dart';
-import 'package:edge_client/service/utils/custom_expension.dart';
-import 'package:edge_client/service/utils/model.dart';
+import 'package:egov_widgets/services/request_info.dart';
+import 'package:egov_widgets/utils/custom_exception.dart';
+import 'package:egov_widgets/utils/models.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
-// import 'package:mgramseva/Env/app_config.dart';
 
 class BaseService {
   Future<dynamic> makeRequest<T>(
