@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 class DateFormats {
   static getFilteredDate(String date, {String? dateFormat}) {
-    if (date == null || date.trim().isEmpty) return '';
+    if (date.trim().isEmpty) return '';
     try {
       var dateTime = DateTime.parse(date).toLocal();
       return DateFormat(dateFormat ?? "dd-MM-yyyy").format(dateTime);
@@ -16,7 +16,7 @@ class DateFormats {
   }
 
   static DateTime? getDateFromString(String date) {
-    if (date == null || date.trim().isEmpty) return null;
+    if (date.trim().isEmpty) return null;
     try {
       var dateTime = DateTime.parse(date).toLocal();
       return dateTime;
@@ -92,7 +92,7 @@ class DateFormats {
 
   static String getMonth(DateTime date) {
     try {
-      return '${DateFormat.MMM().format(date)}';
+      return DateFormat.MMM().format(date);
     } catch (e) {
       return '';
     }
