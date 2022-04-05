@@ -1,4 +1,4 @@
-# Edge Client
+# Citizen One
 
 ## Setup an Editor
 - Refer this [link](https://docs.flutter.dev/get-started/editor) for IDE setup(Prefer VS code which is very light to use), 
@@ -10,11 +10,15 @@
 - Clone the repository [https://github.com/egovernments/citizen-one.git](https://github.com/egovernments/citizen-one.git)
 - $ flutter pub get
 - $ flutter run
-- 
+
 ## Commands for flutter
 - **flutter run** : Command to run the app 
 - **flutter build web** : Command to build web 
 - **flutter build apk --release** : Command to build the apk of the application
+
+## Architecture ##
+### Model View View Model (MVVM) ###
+[MVVP reference Docs](https://medium.com/flutterworld/flutter-mvvm-architecture-f8bed2521958)
 
 ## JSON Serialization
 Command: 
