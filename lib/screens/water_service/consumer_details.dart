@@ -1,7 +1,7 @@
 
+import 'package:egov_widgets/widgets/BaseAppBar.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/base_appbar.dart';
 
 class Consumer extends StatefulWidget {
   final Map category;

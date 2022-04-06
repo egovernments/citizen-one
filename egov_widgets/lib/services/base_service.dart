@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
-import 'package:egov_widgets/services/request_info.dart';
 import 'package:egov_widgets/utils/custom_exception.dart';
 import 'package:egov_widgets/utils/models.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +15,7 @@ class BaseService {
       Map<String, dynamic>? queryParameters,
       Map<String, String>? headers,
       RequestType method = RequestType.GET,
-      RequestInfo? requestInfo}) async {
+      dynamic? requestInfo}) async {
     var uri;
 
     if (queryParameters == null) {

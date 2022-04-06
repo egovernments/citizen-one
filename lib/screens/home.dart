@@ -1,5 +1,5 @@
 import 'package:edge_client/component/search_result.dart';
-import 'package:edge_client/widgets/base_appbar.dart';
+import 'package:egov_widgets/widgets/BaseAppBar.dart';
 import 'package:flutter/material.dart';
 
 import '../component/service_details.dart';
