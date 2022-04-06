@@ -8,3 +8,6 @@ export 'package:flutter_typeahead/flutter_typeahead.dart';
 export 'package:egov_widgets/utils/notifyers.dart';
 export 'package:egov_widgets/services/base_service.dart';
 export 'package:egov_widgets/utils/global_variables.dart';
+
+///screens
+export 'package:egov_widgets/widgets/BaseAppBar.dart';
