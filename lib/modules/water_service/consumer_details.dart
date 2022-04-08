@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 import '../../providers/consumer_provider.dart';
 import '../../service/base_service.dart';
-import '../../service/db/data_base.dart';
 
 class ConsumerView extends StatefulWidget {
   final Map category;

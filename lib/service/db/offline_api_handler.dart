@@ -11,7 +11,7 @@ class OfflineApiHandler {
   Future<Response> requestSegregation(RequestOptions options) async {
    switch(validateTheService(options)){
      case ServiceType.waterService:
-       return await WaterServiceDbHandler.requestSegregation(options);
+       return await WaterServiceDbHandler().requestSegregation(options);
        break;
      case ServiceType.propertyService:
 
@@ -37,6 +37,6 @@ class OfflineApiHandler {
 
   static Future<void> sync([bool? isConnected]) async {
     if((isConnected == null && !(await NetworkConnectivity.isConnected())) || !(isConnected ?? true)) return;
-    WaterServiceDbHandler.syncData();
+    WaterServiceDbHandler().syncData();
   }
 }

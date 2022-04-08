@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'environments/env.dart';
-import 'service/db/data_base.dart';
 import 'service/interceptors.dart';
 
 void main() {
@@ -29,7 +28,6 @@ void main() {
     /// Pass default environment
     Environment().initConfig(Environment.getEnvironment(EnvType.qa));
     NetworkConnectivity.addConnectivityListener((OfflineApiHandler.sync));
-    DataBase.initiateDataBase();
     runApp(MyApp());
   }, (Object error, StackTrace stack) {
     // exit(1);

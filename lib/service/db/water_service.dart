@@ -13,9 +13,18 @@ import '../../models/consumer.dart';
 import '../utils/api_end_points.dart';
 
 class WaterServiceDbHandler {
-  static dynamic _dataBase;
 
-  static Future<Response> requestSegregation(RequestOptions options) async {
+  factory WaterServiceDbHandler() {
+    return _singleton;
+  }
+
+  WaterServiceDbHandler._internal();
+
+  static final WaterServiceDbHandler _singleton = WaterServiceDbHandler._internal();
+  dynamic _dataBase;
+
+
+   Future<Response> requestSegregation(RequestOptions options) async {
    if(_dataBase == null) await initiateConsumerDataBase();
     switch(options.path){
       case ApiEndPoints.consumer :
@@ -26,7 +35,7 @@ class WaterServiceDbHandler {
   }
 
 
-  static Future initiateConsumerDataBase() async {
+   Future initiateConsumerDataBase() async {
     _dataBase = openDatabase(
       join(await getDatabasesPath(), 'consumers_local_db.db'),
       onCreate: (db, version) {
@@ -38,7 +47,7 @@ class WaterServiceDbHandler {
     );
   }
 
-  static syncData() async {
+   syncData() async {
     if(_dataBase == null) await initiateConsumerDataBase();
     Database db = await _dataBase;
     final List<Map<String, dynamic>> maps = await db.query('consumers',
@@ -50,7 +59,7 @@ class WaterServiceDbHandler {
     }
   }
 
-  static Future<Response> insertOrUpdateConsumer(RequestOptions options) async {
+   Future<Response> insertOrUpdateConsumer(RequestOptions options) async {
     Database db = await _dataBase;
     var requestType = HelperMethods.enumFromString(RequestType.values, options.method);
     var response;
@@ -93,7 +102,7 @@ class WaterServiceDbHandler {
     }
   }
 
-  static setConsumersFilteredData(List<Map<String, dynamic>> maps) {
+   setConsumersFilteredData(List<Map<String, dynamic>> maps) {
     return maps.map((e) {
       var consumer = {...e};
       consumer['address'] = <String, dynamic>{};
