@@ -39,14 +39,12 @@ class Environment {
       const environment = String.fromEnvironment('ENV');
       if(environment.isNotEmpty) {
         envType = EnvType.values.firstWhere((e) {
-          // print(e.toString());
           return e.toString().split('.').last == environment;
         }, orElse: ()=> defaultEnv);
       } else {
         envType = defaultEnv;
       }
     }
-    print('dfdfdsds$envType');
     return envType;
   } 
 

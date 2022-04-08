@@ -3,8 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/water_service/collect_payment.dart';
-import '../screens/water_service/consumer_details.dart';
+import '../modules/water_service/collect_payment.dart';
+import '../modules/water_service/consumer_details.dart';
 
 mixin ServiceHandler {
 
