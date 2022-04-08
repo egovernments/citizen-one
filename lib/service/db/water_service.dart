@@ -19,7 +19,6 @@ class WaterServiceDbHandler {
     switch(options.path){
       case ApiEndPoints.consumer :
         return await insertOrUpdateConsumer(options);
-        break;
       default :
         throw DioError(requestOptions: options, type: DioErrorType.other, error: 'not found');
     }
@@ -28,10 +27,10 @@ class WaterServiceDbHandler {
 
   static Future initiateConsumerDataBase() async {
     _dataBase = openDatabase(
-      join(await getDatabasesPath(), 'consumers_database.db'),
+      join(await getDatabasesPath(), 'consumers_db.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE consumers(id INTEGER PRIMARY KEY AUTOINCREMENT, consumerName TEXT, fatherName TEXT, mobileNumber INTEGER, serviceTYpe TEXT, connectionType TEXT)',
+          'CREATE TABLE consumers(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, username TEXT, email INTEGER, phone TEXT, street TEXT, zipcode TEXT)',
         );
       },
       version: 1,
@@ -39,29 +38,44 @@ class WaterServiceDbHandler {
   }
 
   static Future<Response> insertOrUpdateConsumer(RequestOptions options) async {
-    var db = await _dataBase;
+    Database db = await _dataBase;
     var requestType = HelperMethods.enumFromString(RequestType.values, options.method);
     var response;
     try {
       switch(requestType){
         case RequestType.GET:
-          final List<Map<String, dynamic>> maps = await db.query('consumers');
-
-          return Response(requestOptions: options, data: maps, statusCode: 200);
-        case RequestType.PUT:
-        response = await db.update(
-            'consumers',
-            options.data,
-            // Ensure that the Dog has a matching id.
-            where: 'id = ?',
-            // Pass the Dog's id as a whereArg to prevent SQL injection.
-            whereArgs: [options.data['id']],
+          final List<Map<String, dynamic>> maps = await db.query('consumers',
           );
-          return Response(requestOptions: options, data: response, statusCode: 200);
-        case RequestType.POST:
+          var filteredData = maps.map((e) {
+            var consumer = {...e};
+            consumer['address'] = <String, dynamic>{};
+            consumer['address']['street'] = e['street'];
+            consumer['address']['zipcode'] = e['zipcode'];
+            return consumer;
+          }).toList();
+
+          if(options.queryParameters['searchPattern'] != null && options.queryParameters['searchPattern'].toString().isNotEmpty) filteredData = filteredData.where((e) => e['name'].toString().contains(options.queryParameters['searchPattern'])).toList();
+          return Response(requestOptions: options, data: filteredData, statusCode: 200);
+        // case RequestType.PUT:
+        //   var consumer = jsonDecode(options.data);
+        //   consumer['street'] = consumer['address']['street'];
+        //   consumer['zipcode'] = consumer['address']['zipcode'];
+        //   consumer.remove('address');
+        // response = await db.update(
+        //     'consumers',
+        //   consumer,
+        //     where: 'id = ?',
+        //     whereArgs: [options.data['id'].toString()],
+        //   );
+        //   return Response(requestOptions: options, data: response, statusCode: 200);
+        case RequestType.POST: case RequestType.PUT:
+          var consumer = jsonDecode(options.data);
+          consumer['street'] = consumer['address']['street'];
+          consumer['zipcode'] = consumer['address']['zipcode'];
+          consumer.remove('address');
         response =  await db.insert(
             'consumers',
-          jsonDecode(options.data),
+          consumer,
             conflictAlgorithm: ConflictAlgorithm.replace,
           );
         return Response(requestOptions: options, data: response, statusCode: 200);
@@ -69,7 +83,7 @@ class WaterServiceDbHandler {
           return Response(requestOptions: options, data: response, statusCode: 405, statusMessage: 'Method Not Allowed');
       }
     }catch(e){
-      return Response(requestOptions: options, data: response, statusCode: 500, statusMessage: 'INternal Exception');
+      return Response(requestOptions: options, data: response, statusCode: 500, statusMessage: 'Internal Exception');
     }
   }
 

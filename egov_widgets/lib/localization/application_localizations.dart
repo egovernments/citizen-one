@@ -30,12 +30,13 @@ class ApplicationLocalizations {
     // var commonProvider = Provider.of<CommonProvider>(
     //     navigatorKey.currentContext!,
     //     listen: false);
-    //
+
     // var index = commonProvider.localizedStrings
     //     .indexWhere((medium) => medium.code == _localizedValues);
     // return index != -1
     //     ? commonProvider.localizedStrings[index].message
     //     : _localizedValues;
+    return _localizedValues;
   }
 
   static const LocalizationsDelegate<ApplicationLocalizations> delegate =

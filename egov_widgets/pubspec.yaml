@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   freezed_annotation: ^1.1.0
   json_annotation: ^4.4.0
   flutter_typeahead: ^3.2.4
