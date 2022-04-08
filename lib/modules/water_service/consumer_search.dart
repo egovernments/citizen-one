@@ -44,7 +44,7 @@ class _ConsumerSearchState extends State<ConsumerSearch> {
                       "Consumer Name",
                       searchCtrl
                   ),
-                  ElevatedButton(onPressed: () => provider.searchConsumer(searchCtrl.text.trim(), widget.category), child: Text('Search'))
+                  ElevatedButton(onPressed: () => provider.searchConsumer(searchCtrl.text.trim(), widget.category, context), child: Text('Search'))
                 ],
               ),
             ),

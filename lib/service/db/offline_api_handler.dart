@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:egov_widgets/components/network_connectivity.dart';
 
 import '../../utils/enums.dart';
 import 'water_service.dart';
@@ -34,7 +35,8 @@ class OfflineApiHandler {
   }
 
 
-  static Future<void> sync() async {
+  static Future<void> sync([bool? isConnected]) async {
+    if((isConnected == null && !(await NetworkConnectivity.isConnected())) || !(isConnected ?? true)) return;
     WaterServiceDbHandler.syncData();
   }
 }

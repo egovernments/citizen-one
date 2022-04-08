@@ -3,7 +3,7 @@ import 'package:egov_widgets/localization/application_localizations.dart';
 import 'package:egov_widgets/widgets/Tost/toast_animation.dart';
 import 'package:flutter/material.dart';
 
-class ToastUtils {
+mixin ToastUtils {
   static Timer? toastTimer;
   static OverlayEntry? _overlayEntry;
 

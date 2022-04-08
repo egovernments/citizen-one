@@ -39,11 +39,11 @@ class WaterServiceDbHandler {
   }
 
   static syncData() async {
-    if(!(await NetworkConnectivity.isConnected())) return;
     if(_dataBase == null) await initiateConsumerDataBase();
     Database db = await _dataBase;
     final List<Map<String, dynamic>> maps = await db.query('consumers',
     );
+    if(maps.isEmpty) return;
     var res = await ConsumerRepository().consumerCreateOrUpdate(setConsumersFilteredData(maps));
     if(res != null){
       db.delete('consumers');

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:edge_client/modules//home.dart';
+import 'package:edge_client/service/db/offline_api_handler.dart';
 import 'package:edge_client/utils/enums.dart';
 import 'package:edge_client/utils/theme.dart';
 import 'package:egov_widgets/egov_widgets.dart';
@@ -27,6 +28,7 @@ void main() {
 
     /// Pass default environment
     Environment().initConfig(Environment.getEnvironment(EnvType.qa));
+    NetworkConnectivity.addConnectivityListener((OfflineApiHandler.sync));
     DataBase.initiateDataBase();
     runApp(MyApp());
   }, (Object error, StackTrace stack) {

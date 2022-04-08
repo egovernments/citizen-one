@@ -20,18 +20,19 @@ class ConsumerProvider extends ConsumerRepository with ChangeNotifier{
   }
 
 
-  Future<void> createOrUpdateConsumer({bool isCreate = true}) async {
+  Future<void> createOrUpdateConsumer(BuildContext context, {bool isCreate = true}) async {
     try{
       getValues();
       var response = consumerCreateOrUpdate(consumer.toJson());
+      ToastUtils.showCustomToast(context, '${isCreate ? 'Created' : 'Updated'} the consumer Successfully', '');
      navigatorKey.currentState?.pop();
      if(!isCreate) navigatorKey.currentState?.pop();
     }catch(e){
-    print('heloo');
+
     }
   }
 
-  Future<void> searchConsumer(String consumerName, Map category) async {
+  Future<void> searchConsumer(String consumerName, Map category, BuildContext context) async {
     try{
       var query = {
         'searchPattern' : consumerName.toString()
@@ -39,6 +40,8 @@ class ConsumerProvider extends ConsumerRepository with ChangeNotifier{
       var response = await searchForConsumer(query);
       if(response.isNotEmpty) {
         navigatorKey.currentState?.push(MaterialPageRoute(builder: (_)=> ConsumerResult(response, category)));
+      }else{
+        ToastUtils.showCustomToast(context, 'No consumers found', 'ERROR');
       }
     } catch(e){
      print(e);
