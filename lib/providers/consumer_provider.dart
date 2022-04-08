@@ -23,9 +23,9 @@ class ConsumerProvider extends ConsumerRepository with ChangeNotifier{
   Future<void> createOrUpdateConsumer({bool isCreate = true}) async {
     try{
       getValues();
-      var response = consumerCreateOrUpdate(consumer.toJson(), isCreate);
-     print(response);
+      var response = consumerCreateOrUpdate(consumer.toJson());
      navigatorKey.currentState?.pop();
+     if(!isCreate) navigatorKey.currentState?.pop();
     }catch(e){
     print('heloo');
     }

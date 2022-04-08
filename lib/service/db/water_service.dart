@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:edge_client/repository/consumer_repo.dart';
 import 'package:edge_client/service/utils/model.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/models.dart';
@@ -27,14 +28,26 @@ class WaterServiceDbHandler {
 
   static Future initiateConsumerDataBase() async {
     _dataBase = openDatabase(
-      join(await getDatabasesPath(), 'consumers_db.db'),
+      join(await getDatabasesPath(), 'consumers_local_db.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE consumers(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, username TEXT, email INTEGER, phone TEXT, street TEXT, zipcode TEXT)',
+          'CREATE TABLE consumers(localId INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, name TEXT, username TEXT, email INTEGER, phone TEXT, street TEXT, zipcode TEXT)',
         );
       },
       version: 1,
     );
+  }
+
+  static syncData() async {
+    if(!(await NetworkConnectivity.isConnected())) return;
+    if(_dataBase == null) await initiateConsumerDataBase();
+    Database db = await _dataBase;
+    final List<Map<String, dynamic>> maps = await db.query('consumers',
+    );
+    var res = await ConsumerRepository().consumerCreateOrUpdate(setConsumersFilteredData(maps));
+    if(res != null){
+      db.delete('consumers');
+    }
   }
 
   static Future<Response> insertOrUpdateConsumer(RequestOptions options) async {
@@ -46,14 +59,7 @@ class WaterServiceDbHandler {
         case RequestType.GET:
           final List<Map<String, dynamic>> maps = await db.query('consumers',
           );
-          var filteredData = maps.map((e) {
-            var consumer = {...e};
-            consumer['address'] = <String, dynamic>{};
-            consumer['address']['street'] = e['street'];
-            consumer['address']['zipcode'] = e['zipcode'];
-            return consumer;
-          }).toList();
-
+          var filteredData = setConsumersFilteredData(maps);
           if(options.queryParameters['searchPattern'] != null && options.queryParameters['searchPattern'].toString().isNotEmpty) filteredData = filteredData.where((e) => e['name'].toString().contains(options.queryParameters['searchPattern'])).toList();
           return Response(requestOptions: options, data: filteredData, statusCode: 200);
         // case RequestType.PUT:
@@ -87,14 +93,14 @@ class WaterServiceDbHandler {
     }
   }
 
-  static Future getConsumers() async {
-    final db = await _dataBase;
-    final List<Map<String, dynamic>> maps = await db.query('consumers');
-
-    var consumers = List.generate(maps.length, (i) {
-      return ConsumerDetails.fromJson(maps[i]);
+  static setConsumersFilteredData(List<Map<String, dynamic>> maps) {
+    return maps.map((e) {
+      var consumer = {...e};
+      consumer['address'] = <String, dynamic>{};
+      consumer['address']['street'] = e['street'];
+      consumer['address']['zipcode'] = e['zipcode'];
+      return consumer;
     }).toList();
-    return consumers;
   }
 
 

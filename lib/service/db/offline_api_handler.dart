@@ -32,4 +32,9 @@ class OfflineApiHandler {
       return serviceTye.isNotEmpty ? serviceTye.first : throw DioError(requestOptions: options, type: DioErrorType.other, error: 'Not a valid service');
     }
   }
+
+
+  static Future<void> sync() async {
+    WaterServiceDbHandler.syncData();
+  }
 }

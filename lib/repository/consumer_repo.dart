@@ -8,7 +8,7 @@ import '../utils/enums.dart';
 
 class ConsumerRepository extends BaseService {
 
-  Future<dynamic> consumerCreateOrUpdate(Map body, bool isCreate) async {
+  Future<dynamic> consumerCreateOrUpdate(dynamic body) async {
       var response = await makeRequest(
           url: ApiEndPoints.consumer,
           body: body,
@@ -18,7 +18,7 @@ class ConsumerRepository extends BaseService {
                 .split('.')
                 .last
           },
-          method: isCreate ? RequestType.POST : RequestType.PUT);
+          method: RequestType.POST);
       return response;
   }
 

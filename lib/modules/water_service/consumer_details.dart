@@ -33,86 +33,43 @@ class _ConsumerViewState extends State<ConsumerView> {
         AppBar(),
         const <Widget>[Icon(Icons.more_vert)],
       ),
-      body: SingleChildScrollView(
-        child: ChangeNotifierProvider(
-          create: (context) => ConsumerProvider(consumer: widget.consumer ?? UserDetails()),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Consumer<ConsumerProvider>(
-                builder : (_, provider, child) => Wrap(
-                spacing: 10,
-                children: [
-                  BuildTextField(
-                   "Name",
-                    provider.consumer.nameCtrl
-                  ),
-                  BuildTextField(
-                      "Father Name",
-                      provider.consumer.fatherNameCtrl
-                  ),
-                  BuildTextField(
-                      "Mobile Number",
-                      provider.consumer.phoneCtrl
-                  ),
-                  BuildTextField(
-                      "Email",
-                      provider.consumer.emailCtrl
-                  ),
-                  BuildTextField(
-                      "Street",
-                      provider.consumer.streetCtrl
-                  ),
-                  BuildTextField(
-                      "Pin Code",
-                      provider.consumer.zipCodeCtrl
-                  ),
-                  ElevatedButton(onPressed: ()=> provider.createOrUpdateConsumer(isCreate: isCreate), child: Text(isCreate ? 'Create' : 'Update')),
-                  ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          var data = await BaseService().makeRequest(
-                              url: ApiEndPoints.consumer,
-                              headers: {
-                                'serviceType': ServiceType.waterService
-                                    .toString()
-                                    .split('.')
-                                    .last
-                              },
-                              method: RequestType.GET);
-                          print(data);
-                        } catch (e) {
-                          print(e);
-                        }
-                      },
-                      child: Text(('get btn'))),
-                  ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          var consumer = ConsumerDetails(
-                              // id: 0,
-                              connectionType: 'residentail',
-                              consumerName: 'krishna ji',
-                              fatherName: 'ramesh',
-                              mobileNumber: 9949210191,
-                              serviceTYpe: 'meter');
-
-                          var data = await BaseService().makeRequest(
-                              url: ApiEndPoints.consumer,
-                              body: consumer.toJson(),
-                              headers: {
-                                'serviceType': ServiceType.waterService
-                                    .toString()
-                                    .split('.')
-                                    .last
-                              },
-                              method: RequestType.POST);
-                          print(data);
-                        } catch (e) {
-                          print(e);
-                        }
-                      },
-                      child: Text(('push btn')))
-                ],
+      body: NetworkStatusBanner(
+        child: SingleChildScrollView(
+          child: ChangeNotifierProvider(
+            create: (context) => ConsumerProvider(consumer: widget.consumer ?? UserDetails()),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Consumer<ConsumerProvider>(
+                  builder : (_, provider, child) => Wrap(
+                  spacing: 10,
+                  children: [
+                    BuildTextField(
+                     "Name",
+                      provider.consumer.nameCtrl
+                    ),
+                    BuildTextField(
+                        "Father Name",
+                        provider.consumer.fatherNameCtrl
+                    ),
+                    BuildTextField(
+                        "Mobile Number",
+                        provider.consumer.phoneCtrl
+                    ),
+                    BuildTextField(
+                        "Email",
+                        provider.consumer.emailCtrl
+                    ),
+                    BuildTextField(
+                        "Street",
+                        provider.consumer.streetCtrl
+                    ),
+                    BuildTextField(
+                        "Pin Code",
+                        provider.consumer.zipCodeCtrl
+                    ),
+                    ElevatedButton(onPressed: ()=> provider.createOrUpdateConsumer(isCreate: isCreate), child: Text(isCreate ? 'Create' : 'Update')),
+                  ],
+                ),
               ),
             ),
           ),

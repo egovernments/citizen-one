@@ -1,5 +1,6 @@
 
 import 'package:edge_client/modules/water_service/user_details.dart';
+import 'package:egov_widgets/egov_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'consumer_details.dart';
@@ -13,11 +14,13 @@ class ConsumerResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: ListView.builder(
-            itemCount: consumerList.length,
-            itemBuilder: (_, index) => _buildCard(consumerList[index], context)
+      body: NetworkStatusBanner(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: ListView.builder(
+              itemCount: consumerList.length,
+              itemBuilder: (_, index) => _buildCard(consumerList[index], context)
+          ),
         ),
       ),
     );

@@ -28,23 +28,25 @@ class _ConsumerSearchState extends State<ConsumerSearch> {
       ),
       body: ChangeNotifierProvider(
         create: (context) => ConsumerProvider(consumer: UserDetails()),
-        child : Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Consumer<ConsumerProvider>(
-            builder: (_, provider, child) => Wrap(
-              children: [
-                const Text('Search Consumers by Name',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16
-                ),
-                ),
-                BuildTextField(
-                    "Consumer Name",
-                    searchCtrl
-                ),
-                ElevatedButton(onPressed: () => provider.searchConsumer(searchCtrl.text.trim(), widget.category), child: Text('Search'))
-              ],
+        child : NetworkStatusBanner(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Consumer<ConsumerProvider>(
+              builder: (_, provider, child) => Wrap(
+                children: [
+                  const Text('Search Consumers by Name',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                  ),
+                  BuildTextField(
+                      "Consumer Name",
+                      searchCtrl
+                  ),
+                  ElevatedButton(onPressed: () => provider.searchConsumer(searchCtrl.text.trim(), widget.category), child: Text('Search'))
+                ],
+              ),
             ),
           ),
         ),

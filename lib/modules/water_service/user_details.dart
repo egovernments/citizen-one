@@ -1,8 +1,10 @@
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 
 class UserDetails {
   int? id;
+  int? localId;
   String? name;
   String? username;
   String? email;
@@ -17,6 +19,7 @@ class UserDetails {
 
   UserDetails(
       {this.id,
+        this.localId,
         this.name,
         this.username,
         this.email,
@@ -25,6 +28,7 @@ class UserDetails {
 
   UserDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    localId = json['localId'];
     name = json['name'];
     username = json['username'];
     email = json['email'];
@@ -36,6 +40,7 @@ class UserDetails {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['localId'] = this.localId;
     data['name'] = this.name;
     data['username'] = this.username;
     data['email'] = this.email;
@@ -65,3 +70,4 @@ class Address {
     return data;
   }
 }
+
