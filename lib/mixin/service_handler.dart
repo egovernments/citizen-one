@@ -3,8 +3,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/water_service/collect_payment.dart';
-import '../screens/water_service/consumer_details.dart';
+import '../modules/water_service/collect_payment.dart';
+import '../modules/water_service/consumer_details.dart';
+import '../modules/water_service/consumer_search.dart';
 
 mixin ServiceHandler {
 
@@ -78,8 +79,11 @@ mixin ServiceHandler {
     switch(serviceType){
       case 'water' :
         switch(category['categoryType']){
-          case 'create' :case 'update' :case 'search' :
-            Navigator.push(context, MaterialPageRoute(builder: (_)=> Consumer(category)));
+          case 'create' :
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> ConsumerView(category)));
+            break;
+          case 'update' :
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> ConsumerSearch(category)));
             break;
           case 'collectPayment' :
             Navigator.push(context, MaterialPageRoute(builder: (_)=> CollectPayment()));

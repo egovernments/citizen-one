@@ -1,4 +1,3 @@
-enum RequestType { GET, PUT, POST, DELETE }
 
 enum ExceptionType {
   UNAUTHORIZED,
