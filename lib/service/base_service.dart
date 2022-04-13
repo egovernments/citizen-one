@@ -19,10 +19,23 @@ class BaseService {
       Map<String, String>? headers,
       RequestType method = RequestType.GET,
       dynamic? requestInfo}) async {
-    var uri;
 
     dio.options.baseUrl = Environment().config?.apiHost ?? '';
-    dio.options.headers = headers ?? {};
+    if(headers != null) dio.options.headers = headers;
+    else dio.options.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+
+    if (requestInfo != null) {
+      if (body != null) {
+        body = {"RequestInfo": requestInfo.toJson(), ...body};
+      } else {
+        body = requestInfo.toJson();
+      }
+    }
+
+    if (headers == null ||
+        dio.options.headers[HttpHeaders.contentTypeHeader] == 'application/json') {
+      body = jsonEncode(body);
+    }
 
     Response response;
     try {
@@ -39,18 +52,18 @@ class BaseService {
           return response.data;
         case RequestType.PUT:
           response = await dio.put(url,
-              queryParameters: queryParameters, data: json.encode(body));
+              queryParameters: queryParameters, data: body);
           return response.data;
         case RequestType.POST:
           response = await dio.post(
             url,
             queryParameters: queryParameters,
-            data: json.encode(body),
+            data: body,
           );
           return response.data;
         case RequestType.DELETE:
           response = await dio.delete(url,
-              queryParameters: queryParameters, data: json.encode(body));
+              queryParameters: queryParameters, data: body);
           return response.data;
       }
     } on CustomException catch (e) {

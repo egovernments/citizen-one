@@ -41,7 +41,7 @@ class _SearchServicesState extends State<SearchServices> {
         appBar: BaseAppBar(
           const Text("EDGE"),
           AppBar(),
-           <Widget>[IconButton(onPressed: OfflineApiHandler.sync, icon: Icon(Icons.sync))],
+           const <Widget>[IconButton(onPressed: OfflineApiHandler.sync, icon: Icon(Icons.sync))],
         ),
         body: NetworkStatusBanner(
                 child: Padding(

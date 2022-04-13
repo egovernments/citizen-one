@@ -38,6 +38,8 @@ dependencies:
   sqflite: ^2.0.2
   path: ^1.8.0
   dio: ^4.0.6
+  universal_html: ^2.0.8
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:
