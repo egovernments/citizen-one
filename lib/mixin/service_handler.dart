@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/water_service/collect_payment.dart';
-import '../modules/water_service/consumer_details.dart';
-import '../modules/water_service/consumer_search.dart';
+import '../modules/property_tax/property_details.dart';
+import '../modules/property_tax/property_search.dart';
 
 mixin ServiceHandler {
 

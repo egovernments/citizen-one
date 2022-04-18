@@ -21,8 +21,8 @@ class BaseService {
       dynamic? requestInfo}) async {
 
     dio.options.baseUrl = Environment().config?.apiHost ?? '';
-    if(headers != null) dio.options.headers = headers;
-    else dio.options.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    dio.options.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    if(headers != null) dio.options.headers.addAll(headers);
 
     if (requestInfo != null) {
       if (body != null) {

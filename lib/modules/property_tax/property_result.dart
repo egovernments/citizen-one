@@ -1,9 +1,9 @@
 
-import 'package:edge_client/modules/water_service/user_details.dart';
+import 'package:edge_client/modules/property_tax/user_details.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'consumer_details.dart';
+import 'property_details.dart';
 
 class ConsumerResult extends StatelessWidget {
   final List<UserDetails> consumerList;

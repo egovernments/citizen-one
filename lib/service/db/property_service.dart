@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:edge_client/repository/user_repo.dart';
+import 'package:edge_client/repository/property_repo.dart';
 import 'package:edge_client/service/utils/model.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/models.dart';
@@ -12,22 +12,22 @@ import 'package:sqflite/sqflite.dart';
 import '../../models/consumer.dart';
 import '../utils/api_end_points.dart';
 
-class WaterServiceDbHandler {
+class PropertyServiceDbHandler {
 
-  factory WaterServiceDbHandler() {
+  factory PropertyServiceDbHandler() {
     return _singleton;
   }
 
-  WaterServiceDbHandler._internal();
+  PropertyServiceDbHandler._internal();
 
-  static final WaterServiceDbHandler _singleton = WaterServiceDbHandler._internal();
+  static final PropertyServiceDbHandler _singleton = PropertyServiceDbHandler._internal();
   dynamic _dataBase;
 
 
    Future<Response> requestSegregation(RequestOptions options) async {
    if(_dataBase == null) await initiateConsumerDataBase();
     switch(options.path){
-      case ApiEndPoints.consumer :
+      case ApiEndPoints.propertyTax :
         return await insertOrUpdateConsumer(options);
       default :
         throw DioError(requestOptions: options, type: DioErrorType.other, error: 'not found');
@@ -37,10 +37,10 @@ class WaterServiceDbHandler {
 
    Future initiateConsumerDataBase() async {
     _dataBase = openDatabase(
-      join(await getDatabasesPath(), 'consumers_local_db.db'),
+      join(await getDatabasesPath(), 'property_local_db.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE consumers(localId INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, name TEXT, username TEXT, email INTEGER, phone TEXT, street TEXT, zipcode TEXT)',
+          'CREATE TABLE property(localId INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, name TEXT, username TEXT, email INTEGER, phone TEXT, street TEXT, zipcode TEXT)',
         );
       },
       version: 1,
@@ -50,12 +50,12 @@ class WaterServiceDbHandler {
    syncData() async {
     if(_dataBase == null) await initiateConsumerDataBase();
     Database db = await _dataBase;
-    final List<Map<String, dynamic>> maps = await db.query('consumers',
+    final List<Map<String, dynamic>> maps = await db.query('property',
     );
     if(maps.isEmpty) return;
     var res = await UserRepository().consumerCreateOrUpdate(setConsumersFilteredData(maps));
     if(res != null){
-      db.delete('consumers');
+      db.delete('property');
     }
   }
 
@@ -66,7 +66,7 @@ class WaterServiceDbHandler {
     try {
       switch(requestType){
         case RequestType.GET:
-          final List<Map<String, dynamic>> maps = await db.query('consumers',
+          final List<Map<String, dynamic>> maps = await db.query('property',
           );
           var filteredData = setConsumersFilteredData(maps);
           if(options.queryParameters['searchPattern'] != null && options.queryParameters['searchPattern'].toString().isNotEmpty) filteredData = filteredData.where((e) => e['name'].toString().contains(options.queryParameters['searchPattern'])).toList();
@@ -77,7 +77,7 @@ class WaterServiceDbHandler {
         //   consumer['zipcode'] = consumer['address']['zipcode'];
         //   consumer.remove('address');
         // response = await db.update(
-        //     'consumers',
+        //     'property',
         //   consumer,
         //     where: 'id = ?',
         //     whereArgs: [options.data['id'].toString()],
@@ -89,7 +89,7 @@ class WaterServiceDbHandler {
           consumer['zipcode'] = consumer['address']['zipcode'];
           consumer.remove('address');
         response =  await db.insert(
-            'consumers',
+            'property',
           consumer,
             conflictAlgorithm: ConflictAlgorithm.replace,
           );

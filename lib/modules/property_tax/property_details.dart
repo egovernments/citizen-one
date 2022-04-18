@@ -1,5 +1,5 @@
 import 'package:edge_client/models/consumer.dart';
-import 'package:edge_client/modules/water_service/user_details.dart';
+import 'package:edge_client/modules/property_tax/user_details.dart';
 import 'package:edge_client/service/utils/api_end_points.dart';
 import 'package:edge_client/service/utils/model.dart';
 import 'package:edge_client/utils/enums.dart';

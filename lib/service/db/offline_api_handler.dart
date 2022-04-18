@@ -4,18 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:egov_widgets/components/network_connectivity.dart';
 
 import '../../utils/enums.dart';
-import 'water_service.dart';
+import 'property_service.dart';
 
 class OfflineApiHandler {
 
   Future<Response> requestSegregation(RequestOptions options) async {
    switch(validateTheService(options)){
      case ServiceType.waterService:
-       return await WaterServiceDbHandler().requestSegregation(options);
-       break;
+       return await PropertyServiceDbHandler().requestSegregation(options);
      case ServiceType.propertyService:
-
-       break;
+       return await PropertyServiceDbHandler().requestSegregation(options);
      case ServiceType.tradeLicence:
 
        break;
@@ -37,6 +35,6 @@ class OfflineApiHandler {
 
   static Future<void> sync([bool? isConnected]) async {
     if((isConnected == null && !(await NetworkConnectivity.isConnected())) || !(isConnected ?? true)) return;
-    WaterServiceDbHandler().syncData();
+    PropertyServiceDbHandler().syncData();
   }
 }
