@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:edge_client/repository/consumer_repo.dart';
+import 'package:edge_client/repository/user_repo.dart';
 import 'package:edge_client/service/utils/model.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/models.dart';
@@ -53,7 +53,7 @@ class WaterServiceDbHandler {
     final List<Map<String, dynamic>> maps = await db.query('consumers',
     );
     if(maps.isEmpty) return;
-    var res = await ConsumerRepository().consumerCreateOrUpdate(setConsumersFilteredData(maps));
+    var res = await UserRepository().consumerCreateOrUpdate(setConsumersFilteredData(maps));
     if(res != null){
       db.delete('consumers');
     }

@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 
 import '../modules/water_service/consumer_search.dart';
 import '../modules/water_service/user_details.dart';
-import '../repository/consumer_repo.dart';
+import '../repository/user_repo.dart';
 import '../service/utils/api_end_points.dart';
 import '../utils/enums.dart';
 
-class ConsumerProvider extends ConsumerRepository with ChangeNotifier{
+class ConsumerProvider extends UserRepository with ChangeNotifier{
   final UserDetails consumer;
 
   ConsumerProvider({required this.consumer}){

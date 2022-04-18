@@ -4,7 +4,7 @@ import 'package:egov_widgets/egov_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/consumer_provider.dart';
+import '../../providers/user_provider.dart';
 
 class ConsumerSearch extends StatefulWidget {
   final Map category;

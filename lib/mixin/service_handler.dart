@@ -77,7 +77,7 @@ mixin ServiceHandler {
 
   void categoryNavigator(String serviceType, Map category, BuildContext context){
     switch(serviceType){
-      case 'water' :
+      case 'propertyTax' :
         switch(category['categoryType']){
           case 'create' :
             Navigator.push(context, MaterialPageRoute(builder: (_)=> ConsumerView(category)));
