@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:edge_client/models/localization/language.dart';
+import 'package:edge_client/providers/common_provider.dart';
 import 'package:edge_client/repository/core_repo.dart';
 import 'package:edge_client/service/utils/MDMS.dart';
 import 'package:edge_client/utils/constants.dart';
+import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/localization/application_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:universal_html/html.dart';
 
 import '../utils/global_variables.dart';
@@ -23,6 +26,10 @@ class LanguageProvider with ChangeNotifier {
   }
 
   Future<void> getLocalizationData(BuildContext context) async {
+    var commonProvider = Provider.of<CommonProvider>(
+        context,
+        listen: false);
+
     try {
       var res = await getLanguages();
       if (res != null) {
@@ -30,9 +37,9 @@ class LanguageProvider with ChangeNotifier {
         setSelectedState(res);
         await ApplicationLocalizations(
                 Locale(selectedLanguage?.label ?? '', selectedLanguage?.value))
-            .load();
+            .load(commonProvider.getLocalizationLabels);
         var stateInfos = <StateInfo>[];
-        stateInfos.add(new StateInfo.fromJson(res.toJson()));
+        stateInfos.add(StateInfo.fromJson(res.toJson()));
         streamController.add(stateInfos);
       } else {
         var localizationList =
@@ -43,7 +50,7 @@ class LanguageProvider with ChangeNotifier {
           setSelectedState(stateInfo!);
           await ApplicationLocalizations(Locale(
                   selectedLanguage?.label ?? '', selectedLanguage?.value))
-              .load();
+              .load(commonProvider.getLocalizationLabels);
         }
         streamController.add(
             localizationList.mdmsRes?.commonMasters?.stateInfo ??
@@ -57,6 +64,10 @@ class LanguageProvider with ChangeNotifier {
 
   void onSelectionOfLanguage(
       Languages language, List<Languages> languages) async {
+    var commonProvider = Provider.of<CommonProvider>(
+        navigatorKey.currentContext!,
+        listen: false);
+
     if (language.isSelected) return;
     languages.forEach((element) => element.isSelected = false);
     language.isSelected = true;
@@ -66,7 +77,7 @@ class LanguageProvider with ChangeNotifier {
     setSelectedState(stateInfo!);
     await ApplicationLocalizations(
             Locale(selectedLanguage?.label ?? '', selectedLanguage?.value))
-        .load();
+        .load(commonProvider.getLocalizationLabels);
     notifyListeners();
   }
 

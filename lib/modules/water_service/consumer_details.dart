@@ -10,7 +10,7 @@ import 'package:egov_widgets/widgets/BaseAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/consumer_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../service/base_service.dart';
 
 class ConsumerView extends StatefulWidget {

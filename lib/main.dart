@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:edge_client/modules//home.dart';
 import 'package:edge_client/modules/SelectLanguage/languageSelection.dart';
 import 'package:edge_client/providers/common_provider.dart';
+import 'package:edge_client/providers/consumer_details_provider.dart';
+import 'package:edge_client/providers/home_provider.dart';
+import 'package:edge_client/providers/tenants_provider.dart';
 import 'package:edge_client/service/db/offline_api_handler.dart';
 import 'package:edge_client/utils/enums.dart';
 import 'package:edge_client/utils/theme.dart';
@@ -51,6 +54,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => LanguageProvider()),
           ChangeNotifierProvider(create: (_) => CommonProvider()),
           ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
+          ChangeNotifierProvider(create: (_) => TenantsProvider()),
+          ChangeNotifierProvider(create: (_) => HomeProvider()),
+          ChangeNotifierProvider(create: (_) => ConsumerProvider()),
         ],
       child: MaterialApp(
           navigatorKey: navigatorKey,
@@ -78,7 +84,54 @@ class MyApp extends StatelessWidget {
             }
             return supportedLocales.first;
           },
-          home:  SelectLanguage()),
+          home:  const LandingPage()),
     );
   }
 }
+
+class LandingPage extends StatefulWidget {
+  const LandingPage({Key? key}) : super(key: key);
+
+  @override
+  _LandingPageState createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+
+  @override
+  void initState() {
+    Provider.of<CommonProvider>(context, listen: false)
+        .getLoginCredentails();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var commonProvider = Provider.of<CommonProvider>(context, listen: false);
+
+    return Scaffold(
+      body: StreamBuilder(
+          stream: commonProvider.userLoggedStreamCtrl.stream,
+          builder: (context, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+
+              /// While waiting for the data to load, show a loading spinner.
+                return Loaders.circularLoader();
+              default:
+                if (snapshot.hasError) {
+                  return Notifiers.networkErrorPage(context, () {});
+                } else {
+                  if (snapshot.data != null &&
+                      commonProvider.userDetails!.isFirstTimeLogin == true) {
+                    return const SearchServices();
+                  }
+                  return SelectLanguage();
+                }
+            }
+          }),
+    );
+  }
+}
+
+

@@ -2,14 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import 'enums.dart';
-
-class KeyValue {
-  String label;
-  dynamic key;
-  KeyValue(this.label, this.key);
-}
-
 class HomeItem {
   final String label;
   final String walkThroughMsg;
@@ -72,22 +64,6 @@ class SortBy {
   SortBy(this.key, this.isAscending);
 }
 
-class DatePeriod {
-  final DateTime startDate;
-  final DateTime endDate;
-  final DateType dateType;
-  final String? label;
-  DatePeriod(this.startDate, this.endDate, this.dateType, [this.label]);
-
-  @override
-  bool operator ==(otherDate) {
-    return (otherDate is DatePeriod)
-        && otherDate.startDate == startDate
-        && otherDate.endDate == endDate
-        && otherDate.dateType == dateType
-        && otherDate.label == label;
-  }
-}
 
 class Legend {
   final String label;
@@ -103,13 +79,6 @@ class CustomFile {
   final String extension;
 
   CustomFile(this.bytes, this.name, this.extension);
-}
-
-class YearWithMonths {
-  final List<DatePeriod> monthList;
-  final DatePeriod year;
-  bool isExpanded = false;
-  YearWithMonths(this.monthList, this.year);
 }
 
 // class HexColor extends Color {

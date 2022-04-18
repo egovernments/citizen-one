@@ -6,7 +6,7 @@ import 'package:egov_widgets/utils/models.dart';
 import '../service/utils/api_end_points.dart';
 import '../utils/enums.dart';
 
-class ConsumerRepository extends BaseService {
+class UserRepository extends BaseService {
 
   Future<dynamic> consumerCreateOrUpdate(dynamic body) async {
       var response = await makeRequest(

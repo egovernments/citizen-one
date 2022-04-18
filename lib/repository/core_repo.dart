@@ -1,7 +1,7 @@
 import 'package:edge_client/models/localization/language.dart';
-import 'package:edge_client/models/localization/localization_label.dart';
 import 'package:edge_client/service/base_service.dart';
 import 'package:edge_client/service/utils/api_end_points.dart';
+import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/global_variables.dart';
 import 'package:egov_widgets/utils/models.dart';
 

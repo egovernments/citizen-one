@@ -3,9 +3,9 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 
 import 'package:edge_client/models/localization/language.dart';
-import 'package:edge_client/models/localization/localization_label.dart';
 import 'package:edge_client/models/user/user_details.dart';
 import 'package:edge_client/models/user/user_profile.dart';
+import 'package:edge_client/modules/SelectLanguage/languageSelection.dart';
 import 'package:edge_client/providers/language.dart';
 import 'package:edge_client/repository/core_repo.dart';
 import 'package:edge_client/utils/constants.dart';
@@ -255,7 +255,7 @@ class CommonProvider with ChangeNotifier {
         ApplicationLocalizations(Locale(
             languageProvider.selectedLanguage?.label ?? '',
             languageProvider.selectedLanguage?.value))
-            .load();
+            .load(getLocalizationLabels);
       }
     }
 
@@ -402,6 +402,12 @@ class CommonProvider with ChangeNotifier {
     } catch (e) {
       return '';
     }
+  }
+
+  void onLogout() {
+    navigatorKey.currentState
+        ?.pushAndRemoveUntil(MaterialPageRoute(builder: (_) => SelectLanguage()), (route) => false);
+    loginCredentails = null;
   }
 
   // Future<void> sharePdfOnWhatsApp(BuildContext context, pw.Document pdf,

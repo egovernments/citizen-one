@@ -14,29 +14,21 @@ class ApplicationLocalizations {
         context, ApplicationLocalizations)!;
   }
 
-  List<LocalizationLabel> _localizedStrings = <LocalizationLabel>[];
+  static List<LocalizationLabel> _localizedStrings = <LocalizationLabel>[];
 
-  Future<bool> load() async {
-    // if (navigatorKey.currentContext == null) return false;
-    // var commonProvider = Provider.of<CommonProvider>(
-    //     navigatorKey.currentContext!,
-    //     listen: false);
-    // _localizedStrings = await commonProvider.getLocalizationLabels();
+  Future<bool> load(Function? callBack) async {
+    if(callBack == null) return true;
+    _localizedStrings = await callBack();
     return true;
   }
 
   // called from every widget which needs a localized text
-  translate(String _localizedValues) {
-    // var commonProvider = Provider.of<CommonProvider>(
-    //     navigatorKey.currentContext!,
-    //     listen: false);
-
-    // var index = commonProvider.localizedStrings
-    //     .indexWhere((medium) => medium.code == _localizedValues);
-    // return index != -1
-    //     ? commonProvider.localizedStrings[index].message
-    //     : _localizedValues;
-    return _localizedValues;
+  translate(String label) {
+    var index = _localizedStrings
+        .indexWhere((medium) => medium.code == label);
+    return index != -1
+        ? _localizedStrings[index].message
+        : label;
   }
 
   static const LocalizationsDelegate<ApplicationLocalizations> delegate =
@@ -53,10 +45,10 @@ class _ApplicationLocalizationsDelegate
   }
 
   @override
-  Future<ApplicationLocalizations> load(Locale locale) async {
+  Future<ApplicationLocalizations> load(Locale locale, ) async {
     ApplicationLocalizations localization =
-        new ApplicationLocalizations(locale);
-    await localization.load();
+         ApplicationLocalizations(locale);
+    await localization.load(null);
     return localization;
   }
 
