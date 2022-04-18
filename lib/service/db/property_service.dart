@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:edge_client/repository/property_repo.dart';
+import 'package:edge_client/service/utils/abstract_db_handler.dart';
 import 'package:edge_client/service/utils/model.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/models.dart';
@@ -12,7 +13,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../models/consumer.dart';
 import '../utils/api_end_points.dart';
 
-class PropertyServiceDbHandler {
+class PropertyServiceDbHandler implements DbHandler {
 
   factory PropertyServiceDbHandler() {
     return _singleton;
@@ -21,45 +22,41 @@ class PropertyServiceDbHandler {
   PropertyServiceDbHandler._internal();
 
   static final PropertyServiceDbHandler _singleton = PropertyServiceDbHandler._internal();
-  dynamic _dataBase;
+  late Future<Database> _dataBase;
 
+  @override
+  Future<Response> executeDbOperations(RequestOptions options, Future<Database> dataBase) async {
+    _dataBase = dataBase;
+    return await requestSegregation(options);
+  }
 
-   Future<Response> requestSegregation(RequestOptions options) async {
-   if(_dataBase == null) await initiateConsumerDataBase();
+   @override
+  Future<Response> requestSegregation(RequestOptions options) async {
     switch(options.path){
       case ApiEndPoints.propertyTax :
-        return await insertOrUpdateConsumer(options);
+        return await performCrudOperation(options);
       default :
         throw DioError(requestOptions: options, type: DioErrorType.other, error: 'not found');
     }
   }
 
-
-   Future initiateConsumerDataBase() async {
-    _dataBase = openDatabase(
-      join(await getDatabasesPath(), 'property_local_db.db'),
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE property(localId INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, name TEXT, username TEXT, email INTEGER, phone TEXT, street TEXT, zipcode TEXT)',
-        );
-      },
-      version: 1,
-    );
-  }
-
-   syncData() async {
-    if(_dataBase == null) await initiateConsumerDataBase();
+   @override
+  Future<bool> syncData() async {
     Database db = await _dataBase;
     final List<Map<String, dynamic>> maps = await db.query('property',
     );
-    if(maps.isEmpty) return;
+    if(maps.isEmpty) return true;
     var res = await UserRepository().consumerCreateOrUpdate(setConsumersFilteredData(maps));
     if(res != null){
       db.delete('property');
+      return true;
+    }else{
+      return false;
     }
   }
 
-   Future<Response> insertOrUpdateConsumer(RequestOptions options) async {
+   @override
+  Future<Response> performCrudOperation(RequestOptions options) async {
     Database db = await _dataBase;
     var requestType = HelperMethods.enumFromString(RequestType.values, options.method);
     var response;
