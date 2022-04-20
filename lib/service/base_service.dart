@@ -18,10 +18,12 @@ class BaseService {
       Map<String, dynamic>? queryParameters,
       Map<String, String>? headers,
       RequestType method = RequestType.GET,
-      dynamic? requestInfo}) async {
+      dynamic? requestInfo, Map<String, dynamic> extras = const {}, bool storeResponseInDb = false}) async {
 
     dio.options.baseUrl = Environment().config?.apiHost ?? '';
     dio.options.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    dio.options.extra.addAll(extras);
+    dio.options.extra['storeResponse'] = storeResponseInDb;
     if(headers != null) dio.options.headers.addAll(headers);
 
     if (requestInfo != null) {

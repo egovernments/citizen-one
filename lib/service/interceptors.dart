@@ -20,6 +20,11 @@ initiateInterceptors() {
         },
         onResponse:(response,handler) {
           // Do something with response data
+          if(response.requestOptions.extra['storeResponse']){
+            response.requestOptions.data = response.data;
+            response.requestOptions.method = 'PUT';
+            OfflineApiHandler().requestSegregation(response.requestOptions);
+          }
           return handler.next(response); // continue
           // If you want to reject the request with a error message,
           // you can reject a `DioError` object eg: `handler.reject(dioError)`

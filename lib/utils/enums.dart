@@ -1,7 +1,7 @@
 
 enum EnvType {dev, qa, uat, prod}
 
-enum ServiceType {waterService, propertyService, tradeLicence}
+enum ServiceType {waterService, propertyService, tradeLicence, coreService}
 
 enum MDMSType { BusinessService, ConsumerType, TaxHeadCode }
 

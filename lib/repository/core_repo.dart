@@ -1,6 +1,7 @@
 import 'package:edge_client/models/localization/language.dart';
 import 'package:edge_client/service/base_service.dart';
 import 'package:edge_client/service/utils/api_end_points.dart';
+import 'package:edge_client/utils/enums.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/global_variables.dart';
 import 'package:egov_widgets/utils/models.dart';
@@ -38,6 +39,13 @@ class CoreRepository extends BaseService {
         url: ApiEndPoints.MDMS,
         body: body,
         method: RequestType.POST,
+        storeResponseInDb: true,
+        headers: {
+          'serviceType': ServiceType.coreService
+              .toString()
+              .split('.')
+              .last
+        },
         requestInfo: RequestInfo(
             APIConstants.API_MODULE_NAME,
             APIConstants.API_VERSION,

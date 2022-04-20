@@ -6,6 +6,7 @@ import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/localization/application_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   CustomAppBar()
@@ -219,11 +220,10 @@ class _CustomAppBarState extends State<CustomAppBar> with HelperMethods {
         Provider.of<LanguageProvider>(context, listen: false);
     return AppBar(
       titleSpacing: 0,
-      title: Image(
-          width: 130,
-          image: NetworkImage(
-            languageProvider.stateInfo!.logoUrlWhite!,
-          )),
+      title: CachedNetworkImage(
+        width: 130,
+        imageUrl: languageProvider.stateInfo!.logoUrlWhite!,
+      ),
       actions: [
         Container(
             height: MediaQuery.of(context).size.height,

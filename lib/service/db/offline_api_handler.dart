@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:edge_client/modules/water_service/core_handler.dart';
 import 'package:egov_widgets/components/network_connectivity.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -30,6 +31,8 @@ class OfflineApiHandler {
        return await PropertyServiceDbHandler().executeDbOperations(options, _dataBase!);
      case ServiceType.tradeLicence:
        break;
+     case ServiceType.coreService:
+       return await CoreDbHandler().executeDbOperations(options, _dataBase!);
      default:
        throw DioError(requestOptions: options, type: DioErrorType.other, error: 'Not a valid service');
    }
