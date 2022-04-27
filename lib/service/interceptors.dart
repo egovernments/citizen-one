@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:egov_widgets/components/network_connectivity.dart';
+import 'package:flutter/foundation.dart';
 import '../utils/global_variables.dart';
 import 'db/offline_api_handler.dart';
 
@@ -8,7 +9,7 @@ initiateInterceptors() {
     dio.interceptors.add(InterceptorsWrapper(
         onRequest:(options, handler) async {
           // Do something before request is sent
-          if(await NetworkConnectivity.isConnected()) {
+          if(kIsWeb || await NetworkConnectivity.isConnected()) {
             return handler.next(options);
           }else{
             return handler.resolve(await OfflineApiHandler().requestSegregation(options));

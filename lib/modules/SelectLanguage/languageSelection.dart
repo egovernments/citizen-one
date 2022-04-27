@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class SelectLanguage extends StatefulWidget {
+  const SelectLanguage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _SelectLanguage();
 }

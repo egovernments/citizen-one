@@ -61,13 +61,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           navigatorKey: navigatorKey,
           theme: theme,
-          supportedLocales: [
+          supportedLocales: const [
             Locale('en', 'IN'),
             Locale('hi', 'IN'),
             Locale.fromSubtags(languageCode: 'pn')
           ],
           locale: _locale,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             ApplicationLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
