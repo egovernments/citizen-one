@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:edge_client/modules/water_service/consumer_result.dart';
+import 'package:edge_client/modules/property_tax/property_result.dart';
 import 'package:edge_client/service/base_service.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:egov_widgets/utils/models.dart';
 import 'package:flutter/material.dart';
 
-import '../modules/water_service/consumer_search.dart';
-import '../modules/water_service/user_details.dart';
-import '../repository/user_repo.dart';
+import '../modules/property_tax/property_search.dart';
+import '../modules/property_tax/user_details.dart';
+import '../repository/property_repo.dart';
 import '../service/utils/api_end_points.dart';
 import '../utils/enums.dart';
 

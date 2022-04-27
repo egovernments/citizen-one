@@ -1,5 +1,5 @@
 
-import 'package:edge_client/modules/water_service/user_details.dart';
+import 'package:edge_client/modules/property_tax/user_details.dart';
 import 'package:egov_widgets/egov_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +41,7 @@ class _ConsumerSearchState extends State<ConsumerSearch> {
                   ),
                   ),
                   BuildTextField(
-                      "Consumer Name",
+                      "Property Name",
                       searchCtrl
                   ),
                   ElevatedButton(onPressed: () => provider.searchConsumer(searchCtrl.text.trim(), widget.category, context), child: Text('Search'))

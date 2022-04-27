@@ -29,3 +29,4 @@ export 'package:egov_widgets/widgets/SelectFieldBuilder.dart';
 export 'package:egov_widgets/widgets/DatePickerFieldBuilder.dart';
 export 'package:egov_widgets/widgets/MeterReading.dart';
 export 'package:egov_widgets/models/localization/localization_label.dart';
+export 'package:cached_network_image/cached_network_image.dart';

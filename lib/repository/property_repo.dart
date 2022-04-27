@@ -1,6 +1,7 @@
 
-import 'package:edge_client/modules/water_service/user_details.dart';
+import 'package:edge_client/modules/property_tax/user_details.dart';
 import 'package:edge_client/service/base_service.dart';
+import 'package:edge_client/service/utils/base_urls.dart';
 import 'package:egov_widgets/utils/models.dart';
 
 import '../service/utils/api_end_points.dart';
@@ -10,10 +11,11 @@ class UserRepository extends BaseService {
 
   Future<dynamic> consumerCreateOrUpdate(dynamic body) async {
       var response = await makeRequest(
-          url: ApiEndPoints.consumer,
+          url: ApiEndPoints.propertyTax,
+          baseUrl: BaseUrls.qualityAssurance,
           body: body,
           headers: {
-            'serviceType': ServiceType.waterService
+            'serviceType': ServiceType.propertyService
                 .toString()
                 .split('.')
                 .last
@@ -25,10 +27,11 @@ class UserRepository extends BaseService {
   Future<List<UserDetails>> searchForConsumer(Map<String, dynamic> query) async {
     var consumerList = <UserDetails>[];
     var response = await makeRequest(
-        url: ApiEndPoints.consumer,
+        baseUrl: BaseUrls.qualityAssurance,
+        url: ApiEndPoints.propertyTax,
         queryParameters: query,
         headers: {
-          'serviceType': ServiceType.waterService
+          'serviceType': ServiceType.propertyService
               .toString()
               .split('.')
               .last

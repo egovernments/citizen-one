@@ -1,7 +1,7 @@
 
 class ApiEndPoints {
 
-  static const String consumer = 'users';
+  static const String propertyTax = 'users';
 
   static UserUrl user = UserUrl();
 
